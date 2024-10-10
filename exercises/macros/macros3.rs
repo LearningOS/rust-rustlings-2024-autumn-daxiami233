@@ -7,6 +7,8 @@
 
 
 mod macros {
+    // #[macro_export] 属性放在 macro_rules! 宏定义之前，这样宏就会被公开到当前模块的根级别。
+    #[macro_export]
     macro_rules! my_macro {
         () => {
             println!("Check out my macro!");
@@ -15,5 +17,5 @@ mod macros {
 }
 
 fn main() {
-    macros::my_macro!();
+    my_macro!();
 }
