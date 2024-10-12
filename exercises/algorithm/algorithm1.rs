@@ -2,7 +2,6 @@
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
@@ -69,14 +68,35 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
+	pub fn merge(list_a:LinkedList<i32>,list_b:LinkedList<i32>) -> LinkedList<i32>
 	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+		let mut merged_list: LinkedList<i32> = LinkedList::default();
+        let mut p1 = Box::new(&list_a.start);
+        let mut p2 = Box::new(&list_b.start);
+        unsafe {
+            while **p1 != None && **p2 != None {
+                let a = (*((**p1).unwrap().as_ptr())).val;
+                let b = (*((**p2).unwrap().as_ptr())).val;
+                println!("{}, {}", a, b);
+                if a < b {
+                    merged_list.add((*((**p1).unwrap().as_ptr())).val);
+                    p1 = Box::new(&(*(p1.unwrap().as_ptr())).next)
+                } else {
+                    merged_list.add((*((**p2).unwrap().as_ptr())).val);
+                    p2 = Box::new(&(*(p2.unwrap().as_ptr())).next)
+                }
+            }
+            while **p1 != None {
+                merged_list.add((*((**p1).unwrap().as_ptr())).val);
+                p1 = Box::new(&(*(p1.unwrap().as_ptr())).next)
+            }
+            while **p2 != None {
+                merged_list.add((*((**p2).unwrap().as_ptr())).val);
+                p2 = Box::new(&(*(p2.unwrap().as_ptr())).next)
+            }
         }
+        
+        merged_list
 	}
 }
 
